@@ -16,6 +16,10 @@ services:
       - flat-network
   nuxt:
     build: ./nuxt
+    depends_on:
+      - wp
+    environment:
+      WP_HOST: "wp"
     ports:
       - "3000:3000"
     environment:
