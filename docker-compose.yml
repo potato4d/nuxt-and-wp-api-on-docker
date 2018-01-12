@@ -7,9 +7,6 @@ services:
     depends_on:
       - nuxt
       - wp
-    environment:
-      NUXT_HOST: "nuxt"
-      WP_HOST: "wp"
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
     networks:
@@ -18,8 +15,7 @@ services:
     build: ./nuxt
     depends_on:
       - wp
-    environment:
-      WP_HOST: "wp"
+      - db
     ports:
       - "3000:3000"
     environment:
@@ -29,9 +25,9 @@ services:
     networks:
       - flat-network
   wp:
-    image: wordpress:latest
+    build: ./wordpress
     ports:
-      - "8000:80"
+      - "8080:8080"
     depends_on:
       - db
     environment:

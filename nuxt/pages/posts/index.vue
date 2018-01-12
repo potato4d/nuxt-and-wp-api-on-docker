@@ -3,7 +3,7 @@
     <h1>投稿一覧</h1>
     <ul>
       <li v-for="post in posts">
-        <nuxt-link :to="`/posts/${post.slug}`">
+        <nuxt-link :to="post.slug">
           {{post.title.rendered}}
         </nuxt-link>
       </li>

@@ -1,6 +1,8 @@
 <template lang="html">
   <div class="">
-    {{JSON.stringify(data)}}
+    <p><nuxt-link to="/">投稿一覧へ</nuxt-link></p>
+    <h1>post.title.rendered</h1>
+    <div v-html="post.content.rendered" />
   </div>
 </template>
 
@@ -9,9 +11,8 @@ import axios from 'axios'
 
 export default {
   async asyncData ({ params, isServer, redirect }) {
-    console.log(process.env)
     const { slug } = params
-    const API_ROOT = `${isServer ? 'http://nuxtandwpapi_wp_1' : 'http://localhost:8000'}/wp-json/wp/v2`
+    const API_ROOT = `${isServer ? 'http://nuxtandwpapi_wp_1:8080' : 'http://localhost:5000'}/wp-json/wp/v2`
     let data = null
 
     try {
@@ -19,12 +20,12 @@ export default {
       const res = await axios.get(`${API_ROOT}/posts?_embed=true&slug=${slug}`)
       data = res.data
     } catch (e) {
-      // console.log(e)
-      // redirect('/')
+      console.log(e)
+      redirect('/')
     }
 
     return {
-      data
+      post: data[0]
     }
   }
 }
