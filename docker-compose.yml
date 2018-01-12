@@ -1,0 +1,51 @@
+version: '3'
+services:
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "5000:80"
+    depends_on:
+      - nuxt
+      - wp
+    environment:
+      NUXT_HOST: "nuxt"
+      WP_HOST: "wp"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+    networks:
+      - flat-network
+  nuxt:
+    build: ./nuxt
+    ports:
+      - "3000:3000"
+    environment:
+      HOST: "0.0.0.0"
+    volumes:
+      - ./nuxt:/myapp
+    networks:
+      - flat-network
+  wp:
+    image: wordpress:latest
+    ports:
+      - "8000:80"
+    depends_on:
+      - db
+    environment:
+      WORDPRESS_DB_HOST: "db:3306"
+    env_file: .env
+    networks:
+      - flat-network
+  db:
+    image: mysql:latest
+    env_file: .env
+    volumes:
+      - db-data:/var/lib/mysql
+    networks:
+      - flat-network
+
+networks:
+  flat-network:
+
+volumes:
+  db-data:
+    driver: local
