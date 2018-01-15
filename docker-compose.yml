@@ -33,6 +33,8 @@ services:
     environment:
       WORDPRESS_DB_HOST: "db:3306"
     env_file: .env
+    volumes:
+      - ./wordpress/uploads:/app/wordpress/wp-content/uploads
     networks:
       - flat-network
   db:

@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="">
     <p><nuxt-link to="/">投稿一覧へ</nuxt-link></p>
-    <h1>post.title.rendered</h1>
+    <h1>{{post.title.rendered}}</h1>
     <div v-html="post.content.rendered" />
   </div>
 </template>
