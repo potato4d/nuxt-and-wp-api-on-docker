@@ -12,7 +12,7 @@ import axios from 'axios'
 export default {
   async asyncData ({ params, isServer, redirect }) {
     const { slug } = params
-    const API_ROOT = `${isServer ? 'http://nuxtandwpapi_wp_1:8080' : 'http://localhost:5000'}/wp-json/wp/v2`
+    const API_ROOT = `${isServer ? 'http://wp:8080' : 'http://localhost:5000'}/wp-json/wp/v2`
     let data = null
 
     try {
